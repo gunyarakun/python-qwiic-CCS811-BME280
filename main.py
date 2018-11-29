@@ -7,6 +7,7 @@ from logging import basicConfig, getLogger, DEBUG, FileHandler, Formatter
 from time import sleep
 
 import slack_notifier
+import datadog_notifier
 from CCS811 import CCS811
 
 class AirConditionMonitor:
@@ -58,7 +59,8 @@ class AirConditionMonitor:
                         sleep(2)
                         continue
 
-                    self.slack_notifier.update_co2(co2)
+                    # self.slack_notifier.update_co2(co2)
+                    datadog_notifier.update_co2(co2)
 
                     self._logger.info("CO2: {0}ppm, TVOC: {1}".format(co2, self._ccs811.getTVOC()))
                 else:
