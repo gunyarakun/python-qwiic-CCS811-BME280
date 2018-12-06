@@ -46,11 +46,11 @@ class AirConditionMonitor:
             pass
 
         while True:
-            if not self._ccs811.available():
-                sleep(1)
-                continue
-
             try:
+                if not self._ccs811.available():
+                    sleep(1)
+                    continue
+
                 if not self._ccs811.readData():
                     co2 = self._ccs811.geteCO2()
 
