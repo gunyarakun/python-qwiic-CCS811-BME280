@@ -53,16 +53,17 @@ class AirConditionMonitor:
 
                 if not self._ccs811.readData():
                     co2 = self._ccs811.geteCO2()
+                    tvoc = self._ccs811.getTVOC()
 
                     if co2 < self.CO2_LOWER_LIMIT or co2 > self.CO2_HIGHER_LIMIT:
                         self._logger.debug("Under Conditioning...")
                         sleep(2)
                         continue
 
-                    # self.slack_notifier.update_co2(co2)
-                    datadog_notifier.update_co2(co2)
+                    # self.slack_notifier.notify(co2, tvoc)
+                    datadog_notifier.notify(co2, tvoc)
 
-                    self._logger.info("CO2: {0}ppm, TVOC: {1}".format(co2, self._ccs811.getTVOC()))
+                    self._logger.info("CO2: {0}ppm, TVOC: {1}".format(co2, tvoc))
                 else:
                     self._logger.error('ERROR!')
             except:

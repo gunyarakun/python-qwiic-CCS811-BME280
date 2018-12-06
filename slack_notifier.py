@@ -56,7 +56,7 @@ class SlackNotifier:
         else:
             return self.CO2_STATUS_TOO_HIGH
 
-    def update_co2(self, co2):
+    def notify(self, co2, tvoc):
         co2_status = self.convert_co2_status(co2)
         if co2_status != self.co2_status:
             self.notify_to_slack(co2, co2_status)
@@ -80,7 +80,7 @@ class SlackNotifier:
 
         text = fallback
 
-        res = self.notify(
+        res = self.call_slack_api(
             fallback, title, text, self.SLACK_USERNAME, channel, color
         )
         self._logger.debug(
@@ -90,7 +90,7 @@ class SlackNotifier:
         )
 
 
-    def notify(self, fallback, title, text, username, channel, color):
+    def call_slack_api(self, fallback, title, text, username, channel, color):
         headers = {
             'Content-Type': 'application/json'
         }

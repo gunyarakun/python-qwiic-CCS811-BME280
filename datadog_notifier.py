@@ -1,4 +1,5 @@
 from datadog import statsd
 
-def update_co2(co2):
+def notify(co2, tvoc):
     statsd.gauge('misc.office.co2', co2)
+    statsd.gauge('misc.office.tvoc', tvoc)
