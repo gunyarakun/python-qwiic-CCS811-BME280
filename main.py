@@ -42,9 +42,6 @@ class AirConditionMonitor:
             return self.CO2_STATUS_TOO_HIGH
 
     def execute(self):
-        while not self._ccs811.available():
-            pass
-
         while True:
             try:
                 if not self._ccs811.available():
